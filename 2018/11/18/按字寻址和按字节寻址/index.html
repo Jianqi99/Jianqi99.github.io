@@ -1,26 +1,14 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Jianqi Zhu"><meta name="description" content="����������������"><link rel="alternative" href="/atom.xml" title="Jianqi's Blog" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><title>按字寻址和按字节寻址 - Jianqi's Blog</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">Jianqi's Blog</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录 / (CONTENTS)</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-11-18T11:13:17.019Z">November 18, 2018</time><h1 class="post__title"><a href="/2018/11/18/按字寻址和按字节寻址/">按字寻址和按字节寻址</a></h1><div class="post__main echo"><h2 id="按字寻址和按字节寻址"><a href="#按字寻址和按字节寻址" class="headerlink" title="按字寻址和按字节寻址"></a>按字寻址和按字节寻址</h2><p>先从一道简单的问题说起！</p>
-<pre><code>设有一个1MB容量的存储器，字长32位，问：按字节编址，字编址的寻址范围以及各自的寻址范围大小?
-
-如果按字节编址，则
-
-                1MB = 2^20B
-
-                1字节=1B=8bit
-
-                2^20B/1B = 2^20
-
-地址范围为0~(2^20)-1,也就是说需要二十根地址线才能完成对1MB空间的编码，所以地址寄存器为20位,寻址范围大小为2^20=1M
-
-如果按字编址，则
-
-                 1MB=2^20B
-
-                 1字=32bit=4B
-
-                2^20B/4B = 2^18   
-
- 地址范围为0~2^18-1，也就是说我们至少要用18根地址线才能完成对1MB空间的编码。因此按字编址的寻址范围是2^18
-</code></pre><p>以上题目注意几点：</p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Jianqi Zhu"><meta name="description" content="����������������"><link rel="alternative" href="/atom.xml" title="Jianqi's Blog" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><title>按字寻址和按字节寻址 - Jianqi's Blog</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">Jianqi's Blog</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录 / (CONTENTS)</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-11-18T11:13:17.019Z">November 18, 2018</time><h1 class="post__title"><a href="/2018/11/18/按字寻址和按字节寻址/">按字寻址和按字节寻址</a></h1><div class="post__main echo"><h2 id="按字寻址和按字节寻址"><a href="#按字寻址和按字节寻址" class="headerlink" title="按字寻址和按字节寻址"></a>按字寻址和按字节寻址</h2><p>先从一道简单的问题说起！设有一个1MB容量的存储器，字长32位，问：按字节编址，字编址的寻址范围以及各自的寻址范围大小?</p>
+<p>如果按字节编址，则：</p>
+<p>1MB = 2^20B</p>
+<p>1字节=1B=8bit</p>
+<p>2^20B/1B = 2^20<br>地址范围为0~(2^20)-1,也就是说需要二十根地址线才能完成对1MB空间的编码，所以地址寄存器为20位,寻址范围大小为2^20=1M</p>
+<p>如果按字编址，则</p>
+<p>1MB=2^20B</p>
+<p>1字=32bit=4B</p>
+<p>2^20B/4B = 2^18   </p>
+<p>地址范围为0~2^18-1，也就是说我们至少要用18根地址线才能完成对1MB空间的编码。因此按字编址的寻址范围是2^18</p>
+<p>以上题目注意几点：</p>
 <p>1.区分寻址空间与寻址范围两个不同的概念，寻址范围仅仅是一个数字范围，不带有单位</p>
 <p>而寻址范围的大小很明显是一个数，指寻址区间的大小</p>
 <p>  而寻址空间指能够寻址最大容量，单位一般用MB、B来表示；本题中寻址范围为0~(2^20)-1,寻址空间为1MB。</p>
