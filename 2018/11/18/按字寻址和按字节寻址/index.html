@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Jianqi Zhu"><meta name="description" content="����������������"><link rel="alternative" href="/atom.xml" title="Jianqi's Blog" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><title>按字寻址和按字节寻址 - Jianqi's Blog</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">Jianqi's Blog</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录 / (CONTENTS)</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-11-18T11:13:17.019Z">November 18, 2018</time><h1 class="post__title"><a href="/2018/11/18/按字寻址和按字节寻址/">按字寻址和按字节寻址</a></h1><div class="post__main echo"><h2 id="按字寻址和按字节寻址"><a href="#按字寻址和按字节寻址" class="headerlink" title="按字寻址和按字节寻址"></a>按字寻址和按字节寻址</h2><p>先从一道简单的问题说起！</p>
+<pre><code>设有一个1MB容量的存储器，字长32位，问：按字节编址，字编址的寻址范围以及各自的寻址范围大小?
+
+如果按字节编址，则
+
+                1MB = 2^20B
+
+                1字节=1B=8bit
+
+                2^20B/1B = 2^20
+
+地址范围为0~(2^20)-1,也就是说需要二十根地址线才能完成对1MB空间的编码，所以地址寄存器为20位,寻址范围大小为2^20=1M
+
+如果按字编址，则
+
+                 1MB=2^20B
+
+                 1字=32bit=4B
+
+                2^20B/4B = 2^18   
+
+ 地址范围为0~2^18-1，也就是说我们至少要用18根地址线才能完成对1MB空间的编码。因此按字编址的寻址范围是2^18
+</code></pre><p>以上题目注意几点：</p>
+<p>1.区分寻址空间与寻址范围两个不同的概念，寻址范围仅仅是一个数字范围，不带有单位</p>
+<p>而寻址范围的大小很明显是一个数，指寻址区间的大小</p>
+<p>  而寻址空间指能够寻址最大容量，单位一般用MB、B来表示；本题中寻址范围为0~(2^20)-1,寻址空间为1MB。</p>
+<p>2.按字节寻址，指的是存储空间的最小编址单位是字节，按字编址，是指存储空间的最小编址单位是字，以上题为例，总的存储器容量是一定的，按字编址和按字节编址所需要的编码数量是不同的，按字编址由于编址单位比较大（1字=32bit=4B），从而编码较少，而按字节编址由于编码单位较小（1字节=1B=8bit），从而编码较多。</p>
+<p>3.区别M和MB。</p>
+<pre><code>M为数量单位。1024=1K，1024K=1M
+
+MB指容量大小。1024B=1KB，1024KB=1MB.
+</code></pre><ol start="2">
+<li>内存编址</li>
+</ol>
+<p>前面我们知道了DRAM颗粒以及内存模块是如何扩展字长和容量的。一个内存可能是8位，也可能是64位，容量可能是1M，也可能是1G。那么内存是如何编地的呢？和地址总线，计算机字长之间又有什么关系呢？</p>
+<p>2.1 字长</p>
+<p>计算机在同一时间内处理的一组二进制数称为一个计算机的“字”，而这组二进制数的位数就是“字长”。。通常称处理字长为8位数据的CPU叫8位CPU，32位CPU就是在同一时间内处理字长为32位的二进制数据。 所以这里的字并不是我们理解的双字节（Word）而是和硬件相关的一个概念。一般来说计算机的数据线的位数和字长是相同的。这样从内存获取数据后，只需要一次就能把数据全部传送给CPU。</p>
+<p>2.2 地址总线</p>
+<p>前面我们已经介绍过地址总线的功能。地址总线的数量决定了他最大的寻址范围。就目前来说一般地址总线先字长相同。比如32位计算机拥有32为数据线和32为地线，最大寻址范围是4G（0x00000000 ~ 0xFFFFFFFF）。当然也有例外，Intel的8086是16为字长的CPU，采用了16位数据线和20位数据线。</p>
+<p>2.3 内存编址</p>
+<p>从前面我们知道一个内存的大小和它芯片扩展方式有关。比如我们内存模块是采用 16M<em>8bit的内存颗粒，那么我们使用4个颗粒进行位扩展，成为16M</em>32bit，使用4个颗粒进行字容量扩展变为64M*32bit。那么我们内存模块使用了16个内存颗粒，实际大小是256MB。</p>
+<p>我们需要对这个256M的内存进行编址以便CPU能够使用它，通常我们多种编址方式：</p>
+<p>按字编址：    对于这个256M内存来说，它的寻址范围是64M，而每个内存地址可以存储32bit数据。<br>按半字编址：对于这个256M内存来说，它的寻址范围是128M，而每个内存地址可以存储16bit数据。<br>按字节编址：对于这个256M内存来说，它的寻址范围是256M，而每个内存地址可以存储8bit数据。</p>
+<p>对于我们现在的计算机来说，主要都是采用按字节编址的方式。所以我们可以把内存简单的看成一个线性数组，数组每个元素的大小为8bit，我们称为一个存储单元。这一点很重要，因为后面讨论的所有问题内存都是以按字节编址的方式。 这也是为什么对于32位计算机来说，能使用的最多容量的内存为4GB。如果我们按字编地址，能使用的最大内存容量就是16GB了。</p>
+<p>于是很容易想到一个问题，为什么我们要采用字节编址的方式呢？关于这个问题，我在网上基本没有找到答案，甚至都找不到问这个问题的。所以这里没法给出答案，为什么为什么呢？ 麻烦知道的朋友告诉我哈。</p>
+<p>另一方面的问题是，内存编址方式和DRAM芯片是否有关呢？ 我认为还是有一定关系。比如我DRAM的芯片是8M*8bit，那么芯片最小的存储单位就是8bit，那么我们内存编址就不能按照半个字节来编址。否则内存取出8bit，根本不知道你要那4bit传给CPU。也有一种说法是现在的DRAM芯片cell都是8bit，所以采用按字节编址。另一方面应该也和数据总线位宽有关。</p>
+</div></header><footer class="post__foot u-cf"><ul class="post__tag u-fl"><li class="post__tag__item"><a class="post__tag__link" href="/tags/计算机组成原理/">计算机组成原理</a></li></ul></footer></article><section class="reward"> <a class="btn-reward" href="#">打赏</a><div class="reward-wrapper clearfix"><img src="/img/alipay.png" title="支付宝"></div></section><div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC80MDgzMC8xNzM1NQ=="><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2018 Jianqi Zhu</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
